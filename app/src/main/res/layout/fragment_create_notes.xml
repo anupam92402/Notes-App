@@ -32,6 +32,7 @@
                 app:tint="@color/colorIcons" />
 
             <ImageView
+                android:id="@+id/imageSave"
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp"
                 android:layout_marginEnd="@dimen/_12sdp"
