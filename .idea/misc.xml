@@ -3,13 +3,30 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/resume projects/Notes App/app/src/main/res/drawable/background_done_button.xml" value="0.188" />
+        <entry key="..\:/resume projects/Notes App/app/src/main/res/drawable/ic_image.xml" value="0.188" />
         <entry key="..\:/resume projects/Notes App/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/resume projects/Notes App/app/src/main/res/layout/activity_notes.xml" value="0.25416666666666665" />
+        <entry key="..\:/resume projects/Notes App/app/src/main/res/layout/app_bar_notes.xml" value="0.25416666666666665" />
+        <entry key="..\:/resume projects/Notes App/app/src/main/res/layout/content_notes.xml" value="0.25416666666666665" />
+        <entry key="..\:/resume projects/Notes App/app/src/main/res/layout/fragment_create_notes.xml" value="0.25416666666666665" />
         <entry key="..\:/resume projects/Notes App/app/src/main/res/layout/fragment_first_screen.xml" value="0.25416666666666665" />
+        <entry key="..\:/resume projects/Notes App/app/src/main/res/layout/fragment_gallery.xml" value="0.25416666666666665" />
+        <entry key="..\:/resume projects/Notes App/app/src/main/res/layout/fragment_home.xml" value="0.25416666666666665" />
+        <entry key="..\:/resume projects/Notes App/app/src/main/res/layout/fragment_important.xml" value="0.25416666666666665" />
         <entry key="..\:/resume projects/Notes App/app/src/main/res/layout/fragment_notes.xml" value="0.25416666666666665" />
         <entry key="..\:/resume projects/Notes App/app/src/main/res/layout/fragment_second_screen.xml" value="0.25416666666666665" />
+        <entry key="..\:/resume projects/Notes App/app/src/main/res/layout/fragment_slideshow.xml" value="0.11302083333333333" />
         <entry key="..\:/resume projects/Notes App/app/src/main/res/layout/fragment_splash_screen.xml" value="0.24010416666666667" />
         <entry key="..\:/resume projects/Notes App/app/src/main/res/layout/fragment_third_sceeen.xml" value="0.24010416666666667" />
+        <entry key="..\:/resume projects/Notes App/app/src/main/res/layout/fragment_trash.xml" value="0.24010416666666667" />
         <entry key="..\:/resume projects/Notes App/app/src/main/res/layout/fragment_view_pager.xml" value="0.25416666666666665" />
+        <entry key="..\:/resume projects/Notes App/app/src/main/res/layout/nav_header.xml" value="0.18437025796661607" />
+        <entry key="..\:/resume projects/Notes App/app/src/main/res/layout/nav_header_notes.xml" value="0.2" />
+        <entry key="..\:/resume projects/Notes App/app/src/main/res/menu/activity_main_drawer.xml" value="0.25416666666666665" />
+        <entry key="..\:/resume projects/Notes App/app/src/main/res/menu/nav_drawer_menu.xml" value="0.25416666666666665" />
+        <entry key="..\:/resume projects/Notes App/app/src/main/res/menu/nav_header_menu.xml" value="0.25416666666666665" />
+        <entry key="..\:/resume projects/Notes App/app/src/main/res/menu/notes.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>
