@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/resume projects/Notes App/app/src/main/res/drawable/background_done_button.xml" value="0.188" />
+        <entry key="..\:/resume projects/Notes App/app/src/main/res/drawable/background_note.xml" value="0.188" />
         <entry key="..\:/resume projects/Notes App/app/src/main/res/drawable/ic_image.xml" value="0.188" />
         <entry key="..\:/resume projects/Notes App/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/resume projects/Notes App/app/src/main/res/layout/activity_notes.xml" value="0.25416666666666665" />
@@ -21,6 +22,7 @@
         <entry key="..\:/resume projects/Notes App/app/src/main/res/layout/fragment_third_sceeen.xml" value="0.24010416666666667" />
         <entry key="..\:/resume projects/Notes App/app/src/main/res/layout/fragment_trash.xml" value="0.24010416666666667" />
         <entry key="..\:/resume projects/Notes App/app/src/main/res/layout/fragment_view_pager.xml" value="0.25416666666666665" />
+        <entry key="..\:/resume projects/Notes App/app/src/main/res/layout/item_container_note.xml" value="0.25416666666666665" />
         <entry key="..\:/resume projects/Notes App/app/src/main/res/layout/nav_header.xml" value="0.18437025796661607" />
         <entry key="..\:/resume projects/Notes App/app/src/main/res/layout/nav_header_notes.xml" value="0.2" />
         <entry key="..\:/resume projects/Notes App/app/src/main/res/menu/activity_main_drawer.xml" value="0.25416666666666665" />
