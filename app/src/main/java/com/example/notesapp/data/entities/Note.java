@@ -35,6 +35,17 @@ public class Note implements Serializable {
     @ColumnInfo(name = "web_link")
     private String web_link;
 
+    @ColumnInfo(name = "archived")
+    private boolean archived;
+
+    public boolean isArchived() {
+        return archived;
+    }
+
+    public void setArchived(boolean archived) {
+        this.archived = archived;
+    }
+
     public int getId() {
         return id;
     }

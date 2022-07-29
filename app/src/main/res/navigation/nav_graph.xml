@@ -40,6 +40,12 @@
         <action
             android:id="@+id/action_notesFragment_to_createNotesFragment"
             app:destination="@id/createNotesFragment" />
+        <action
+            android:id="@+id/action_notesFragment_to_archiveFragment"
+            app:destination="@id/archiveFragment" />
+        <action
+            android:id="@+id/action_notesFragment_to_paintFragment"
+            app:destination="@id/paintFragment" />
     </fragment>
     <fragment
         android:id="@+id/createNotesFragment"
@@ -50,4 +56,14 @@
             android:id="@+id/action_createNotesFragment_to_notesFragment"
             app:destination="@id/notesFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/archiveFragment"
+        android:name="com.example.notesapp.ui.fragments.ArchiveFragment"
+        android:label="fragment_archive"
+        tools:layout="@layout/fragment_archive" />
+    <fragment
+        android:id="@+id/paintFragment"
+        android:name="com.example.notesapp.ui.fragments.PaintFragment"
+        android:label="fragment_paint"
+        tools:layout="@layout/fragment_paint" />
 </navigation>

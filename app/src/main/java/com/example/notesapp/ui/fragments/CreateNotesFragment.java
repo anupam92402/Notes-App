@@ -173,6 +173,7 @@ public class CreateNotesFragment extends Fragment {
         note.setDateTime(textDateTime.getText().toString());
         note.setColor(selectedNoteColor);
         note.setImagePath(selectedImagePath);
+        note.setArchived(false);
 
         if (layoutWebURL.getVisibility() == View.VISIBLE) {
             note.setWeb_link(textWebUrl.getText().toString());
@@ -354,7 +355,7 @@ public class CreateNotesFragment extends Fragment {
 
                         @Override
                         protected Void doInBackground(Void... voids) {
-                            NotesDatabase.getNotesDatabase(getActivity().getApplicationContext()).noteDao().deleteNote(alreadyAvailableNote);
+                            alreadyAvailableNote.setArchived(true);
                             return null;
                         }
 
