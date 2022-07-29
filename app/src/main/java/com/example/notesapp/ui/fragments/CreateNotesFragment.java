@@ -66,6 +66,7 @@ public class CreateNotesFragment extends Fragment {
     private ImageView imageNote;
     private String selectedImagePath;
     private AlertDialog dialogAddURL;
+    private Note alreadyAvailableNote;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -92,6 +93,34 @@ public class CreateNotesFragment extends Fragment {
         selectedImagePath = "";
         initMiscellaneous();
         setSubtitleIndicatorColor();
+        if (getArguments() != null) {
+            if (getArguments().getBoolean("ViewOrEdit", false)) {
+                alreadyAvailableNote = (Note) getArguments().getSerializable("note");
+                setViewOrUpdate();
+            }
+        }
+
+    }
+
+    private void setViewOrUpdate() {
+        inputNoteTitle.setText(alreadyAvailableNote.getTitle());
+        inputNoteSubtitle.setText(alreadyAvailableNote.getSubtitle());
+        inputNoteText.setText(alreadyAvailableNote.getNoteText());
+        textDateTime.setText(alreadyAvailableNote.getDateTime());
+
+        selectedNoteColor = alreadyAvailableNote.getColor();
+        setSubtitleIndicatorColor();
+
+        if (alreadyAvailableNote.getImagePath() != null && !alreadyAvailableNote.getImagePath().trim().isEmpty()) {
+            imageNote.setImageBitmap(BitmapFactory.decodeFile(alreadyAvailableNote.getImagePath()));
+            imageNote.setVisibility(View.VISIBLE);
+            selectedImagePath = alreadyAvailableNote.getImagePath();
+        }
+
+        if (alreadyAvailableNote.getWeb_link() != null && !alreadyAvailableNote.getWeb_link().trim().isEmpty()) {
+            layoutWebURL.setVisibility(View.VISIBLE);
+            textWebUrl.setText(alreadyAvailableNote.getWeb_link());
+        }
     }
 
     private void saveNote() {
@@ -110,9 +139,13 @@ public class CreateNotesFragment extends Fragment {
         note.setDateTime(textDateTime.getText().toString());
         note.setColor(selectedNoteColor);
         note.setImagePath(selectedImagePath);
+
         if (layoutWebURL.getVisibility() == View.VISIBLE) {
             note.setWeb_link(textWebUrl.getText().toString());
+        }
 
+        if (alreadyAvailableNote != null) {
+            note.setId(alreadyAvailableNote.getId());
         }
 
         class SaveNoteTask extends AsyncTask<Void, Void, Void> {
@@ -232,6 +265,24 @@ public class CreateNotesFragment extends Fragment {
             }
         });
 
+        if (alreadyAvailableNote != null && alreadyAvailableNote.getColor() != null &&
+                !alreadyAvailableNote.getColor().trim().isEmpty()) {
+            switch (alreadyAvailableNote.getColor()) {
+                case "#FDBE3B":
+                    layoutMiscellaneous.findViewById(R.id.viewColor2).performClick();
+                    break;
+                case "#FF4842":
+                    layoutMiscellaneous.findViewById(R.id.viewColor3).performClick();
+                    break;
+                case "#3A52Fc":
+                    layoutMiscellaneous.findViewById(R.id.viewColor4).performClick();
+                    break;
+                case "#000000":
+                    layoutMiscellaneous.findViewById(R.id.viewColor5).performClick();
+                    break;
+            }
+        }
+
         layoutMiscellaneous.findViewById(R.id.layoutAddImage).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -317,7 +368,7 @@ public class CreateNotesFragment extends Fragment {
     private void showAddURLDialog() {
         if (dialogAddURL == null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            View view = LayoutInflater.from(getActivity()).inflate(R.layout.layout_add_url, (ViewGroup) this.view.findViewById(R.id.layoutAddUrlContainer));
+            View view = LayoutInflater.from(getActivity()).inflate(R.layout.layout_add_url, this.view.findViewById(R.id.layoutAddUrlContainer));
             builder.setView(view);
             dialogAddURL = builder.create();
             if (dialogAddURL.getWindow() != null) {

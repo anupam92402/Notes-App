@@ -15,12 +15,13 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.example.notesapp.R;
 import com.example.notesapp.data.database.NotesDatabase;
 import com.example.notesapp.data.entities.Note;
+import com.example.notesapp.listeners.NotesListeners;
 import com.example.notesapp.ui.adapters.NotesAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotesFragment extends Fragment {
+public class NotesFragment extends Fragment implements NotesListeners {
 
 
     @Override
@@ -35,13 +36,17 @@ public class NotesFragment extends Fragment {
     private RecyclerView notesRecyclerView;
     private List<Note> noteList;
     private NotesAdapter notesAdapter;
+    public static final int REQUEST_CODE_UPDATE_NOTE = 2;
+    private int noteOnClickedPosition = -1;
+    private View view;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        this.view = view;
         notesRecyclerView = view.findViewById(R.id.notesRecyclerView);
         noteList = new ArrayList<>();
-        notesAdapter = new NotesAdapter(noteList);
+        notesAdapter = new NotesAdapter(noteList, this::onNoteClicked);
         setRecyclerView();
         view.findViewById(R.id.imageAddNoteMain).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +80,7 @@ public class NotesFragment extends Fragment {
                     noteList.addAll(notes);
                     notesAdapter.notifyDataSetChanged();
                 } else {
-                    //adding lastest note just created
+                    //adding latest note just created
                     noteList.add(0, notes.get(0));
                     notesAdapter.notifyItemInserted(0);
                 }
@@ -85,4 +90,12 @@ public class NotesFragment extends Fragment {
         new GetNotesTask().execute();
     }
 
+    @Override
+    public void onNoteClicked(Note note, int position) {
+        noteOnClickedPosition = position;
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("ViewOrEdit", true);
+        bundle.putSerializable("note", note);
+        Navigation.findNavController(view).navigate(R.id.action_notesFragment_to_createNotesFragment, bundle);
+    }
 }
