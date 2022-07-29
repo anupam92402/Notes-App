@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -26,6 +27,7 @@ import com.example.notesapp.listeners.NotesListeners;
 import com.example.notesapp.ui.adapters.ArchiveAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ArchiveFragment extends Fragment implements NotesListeners {
@@ -62,10 +64,29 @@ public class ArchiveFragment extends Fragment implements NotesListeners {
         });
     }
 
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, 0) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            int source = viewHolder.getAdapterPosition();
+            int destination = target.getAdapterPosition();
+            Collections.swap(noteList, source, destination);
+            archiveAdapter.notifyItemMoved(source, destination);
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+        }
+    };
+
     private void setRecyclerView() {
         archiveRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         archiveRecyclerView.setAdapter(archiveAdapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(archiveRecyclerView);
     }
+
 
     private void getNotes() {
         @SuppressLint("StaticFieldLeak")

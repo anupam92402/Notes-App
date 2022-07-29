@@ -10,8 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -22,6 +24,7 @@ import com.example.notesapp.listeners.NotesListeners;
 import com.example.notesapp.ui.adapters.NotesAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class NotesFragment extends Fragment implements NotesListeners {
@@ -94,10 +97,21 @@ public class NotesFragment extends Fragment implements NotesListeners {
         });
     }
 
-    private void setRecyclerView() {
-        notesRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        notesRecyclerView.setAdapter(notesAdapter);
-    }
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, 0) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            int source = viewHolder.getAdapterPosition();
+            int destination = target.getAdapterPosition();
+            Collections.swap(noteList, source, destination);
+            notesAdapter.notifyItemMoved(source, destination);
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+        }
+    };
 
     private void getNotes() {
         @SuppressLint("StaticFieldLeak")
@@ -125,6 +139,13 @@ public class NotesFragment extends Fragment implements NotesListeners {
             }
         }
         new GetNotesTask().execute();
+    }
+
+    private void setRecyclerView() {
+        notesRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        notesRecyclerView.setAdapter(notesAdapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(notesRecyclerView);
     }
 
     @Override
