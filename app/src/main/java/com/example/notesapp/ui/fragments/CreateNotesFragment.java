@@ -34,6 +34,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.notesapp.R;
+import com.example.notesapp.data.database.ArchiveDatabase;
 import com.example.notesapp.data.database.NotesDatabase;
 import com.example.notesapp.data.entities.Note;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -173,7 +174,6 @@ public class CreateNotesFragment extends Fragment {
         note.setDateTime(textDateTime.getText().toString());
         note.setColor(selectedNoteColor);
         note.setImagePath(selectedImagePath);
-        note.setArchived(false);
 
         if (layoutWebURL.getVisibility() == View.VISIBLE) {
             note.setWeb_link(textWebUrl.getText().toString());
@@ -355,7 +355,8 @@ public class CreateNotesFragment extends Fragment {
 
                         @Override
                         protected Void doInBackground(Void... voids) {
-                            alreadyAvailableNote.setArchived(true);
+                            NotesDatabase.getNotesDatabase(getActivity().getApplicationContext()).noteDao().deleteNote(alreadyAvailableNote);
+                            ArchiveDatabase.getArchiveDatabase(getActivity().getApplicationContext()).archiveDao().insertArchiveNote(alreadyAvailableNote);
                             return null;
                         }
 

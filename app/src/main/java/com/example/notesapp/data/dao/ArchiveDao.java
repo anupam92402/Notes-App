@@ -11,14 +11,14 @@ import com.example.notesapp.data.entities.Note;
 import java.util.List;
 
 @Dao
-public interface NoteDao {
+public interface ArchiveDao {
 
     @Query("SELECT * FROM notes ORDER BY id DESC")
-    List<Note> getAllNotes();
+    List<Note> getAllArchiveNotes();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertNote(Note note);
+    void insertArchiveNote(Note note);
 
     @Delete
-    void deleteNote(Note note);
+    void deleteNotePermanently(Note note);
 }
