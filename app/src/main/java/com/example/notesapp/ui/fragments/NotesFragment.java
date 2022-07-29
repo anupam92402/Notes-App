@@ -3,9 +3,12 @@ package com.example.notesapp.ui.fragments;
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
@@ -39,6 +42,7 @@ public class NotesFragment extends Fragment implements NotesListeners {
     public static final int REQUEST_CODE_UPDATE_NOTE = 2;
     private int noteOnClickedPosition = -1;
     private View view;
+    EditText inputSearch;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -55,6 +59,25 @@ public class NotesFragment extends Fragment implements NotesListeners {
             }
         });
         getNotes();
+        inputSearch = view.findViewById(R.id.inputSearch);
+        inputSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                notesAdapter.cancelTimer();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (noteList.size() != 0) {
+                    notesAdapter.searchNotes(editable.toString());
+                }
+            }
+        });
     }
 
     private void setRecyclerView() {
