@@ -89,8 +89,28 @@ public class CreateNotesFragment extends Fragment {
 
         textDateTime.setText(new SimpleDateFormat("EEEE, d MMMM yyyy HH:mm a", Locale.getDefault())
                 .format(new Date()));
+
         selectedNoteColor = "#333333";
         selectedImagePath = "";
+
+        view.findViewById(R.id.imageRemoveWebURL).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                textWebUrl.setText(null);
+                layoutWebURL.setVisibility(View.GONE);
+            }
+        });
+
+        view.findViewById(R.id.imageRemoveImage).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imageNote.setImageBitmap(null);
+                imageNote.setVisibility(View.GONE);
+                view.findViewById(R.id.imageRemoveImage).setVisibility(View.GONE);
+                selectedImagePath = "";
+            }
+        });
+
         initMiscellaneous();
         setSubtitleIndicatorColor();
         if (getArguments() != null) {
@@ -115,6 +135,7 @@ public class CreateNotesFragment extends Fragment {
             imageNote.setImageBitmap(BitmapFactory.decodeFile(alreadyAvailableNote.getImagePath()));
             imageNote.setVisibility(View.VISIBLE);
             selectedImagePath = alreadyAvailableNote.getImagePath();
+            view.findViewById(R.id.imageRemoveImage).setVisibility(View.VISIBLE);
         }
 
         if (alreadyAvailableNote.getWeb_link() != null && !alreadyAvailableNote.getWeb_link().trim().isEmpty()) {
@@ -341,6 +362,7 @@ public class CreateNotesFragment extends Fragment {
                         Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                         imageNote.setImageBitmap(bitmap);
                         imageNote.setVisibility(View.VISIBLE);
+                        view.findViewById(R.id.imageRemoveImage).setVisibility(View.VISIBLE);
                         selectedImagePath = getPathFromUri(selectedImageUri);
                     } catch (Exception exception) {
                         Toast.makeText(getActivity(), exception.getMessage(), Toast.LENGTH_SHORT).show();
