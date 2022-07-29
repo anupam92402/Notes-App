@@ -55,7 +55,7 @@ public class CreateNotesFragment extends Fragment {
     }
 
     ImageView imageBack, imageSave;
-    View view;
+    View initialView;
     private EditText inputNoteTitle, inputNoteSubtitle, inputNoteText;
     private TextView textDateTime, textWebUrl;
     private String selectedNoteColor;
@@ -65,14 +65,14 @@ public class CreateNotesFragment extends Fragment {
     private static final int REQUEST_CODE_SELECT_IMAGE = 2;
     private ImageView imageNote;
     private String selectedImagePath;
-    private AlertDialog dialogAddURL;
+    private AlertDialog dialogAddURL, dialogDeleteNote;
     private Note alreadyAvailableNote;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initialize(view);
-        this.view = view;
+        this.initialView = view;
         imageBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -135,12 +135,25 @@ public class CreateNotesFragment extends Fragment {
             imageNote.setImageBitmap(BitmapFactory.decodeFile(alreadyAvailableNote.getImagePath()));
             imageNote.setVisibility(View.VISIBLE);
             selectedImagePath = alreadyAvailableNote.getImagePath();
-            view.findViewById(R.id.imageRemoveImage).setVisibility(View.VISIBLE);
+            initialView.findViewById(R.id.imageRemoveImage).setVisibility(View.VISIBLE);
         }
 
         if (alreadyAvailableNote.getWeb_link() != null && !alreadyAvailableNote.getWeb_link().trim().isEmpty()) {
             layoutWebURL.setVisibility(View.VISIBLE);
             textWebUrl.setText(alreadyAvailableNote.getWeb_link());
+        }
+
+        if (alreadyAvailableNote != null) {
+            final LinearLayout layoutMiscellaneous = initialView.findViewById(R.id.layoutMiscellaneous);
+            final BottomSheetBehavior<LinearLayout> bottomSheetBehavior = BottomSheetBehavior.from(layoutMiscellaneous);
+            layoutMiscellaneous.findViewById(R.id.layoutDeleteNote).setVisibility(View.VISIBLE);
+            layoutMiscellaneous.findViewById(R.id.layoutDeleteNote).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    showDeleteNoteDialog();
+                }
+            });
         }
     }
 
@@ -182,7 +195,7 @@ public class CreateNotesFragment extends Fragment {
                 super.onPostExecute(unused);
                 Intent intent = new Intent();
                 getActivity().setResult(RESULT_OK, intent);
-                Navigation.findNavController(view).navigate(R.id.action_createNotesFragment_to_notesFragment);
+                Navigation.findNavController(initialView).navigate(R.id.action_createNotesFragment_to_notesFragment);
             }
         }
         new SaveNoteTask().execute();
@@ -202,7 +215,7 @@ public class CreateNotesFragment extends Fragment {
     }
 
     private void initMiscellaneous() {
-        final LinearLayout layoutMiscellaneous = view.findViewById(R.id.layoutMiscellaneous);
+        final LinearLayout layoutMiscellaneous = initialView.findViewById(R.id.layoutMiscellaneous);
         final BottomSheetBehavior<LinearLayout> bottomSheetBehavior = BottomSheetBehavior.from(layoutMiscellaneous);
         layoutMiscellaneous.findViewById(R.id.textMiscellaneous).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -323,7 +336,50 @@ public class CreateNotesFragment extends Fragment {
                 showAddURLDialog();
             }
         });
+    }
 
+    private void showDeleteNoteDialog() {
+        if (dialogDeleteNote == null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            View view = LayoutInflater.from(getActivity()).inflate(R.layout.layout_delete_note, this.initialView.findViewById(R.id.layoutAddUrlContainer));
+            builder.setView(view);
+            dialogDeleteNote = builder.create();
+            if (dialogDeleteNote.getWindow() != null) {
+                dialogDeleteNote.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+            }
+            view.findViewById(R.id.textDeleteNote).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    class DeleteNoteTask extends AsyncTask<Void, Void, Void> {
+
+                        @Override
+                        protected Void doInBackground(Void... voids) {
+                            NotesDatabase.getNotesDatabase(getActivity().getApplicationContext()).noteDao().deleteNote(alreadyAvailableNote);
+                            return null;
+                        }
+
+                        @Override
+                        protected void onPostExecute(Void unused) {
+                            super.onPostExecute(unused);
+                            Intent intent = new Intent();
+                            getActivity().setResult(RESULT_OK, intent);
+                            Navigation.findNavController(initialView).navigate(R.id.action_createNotesFragment_to_notesFragment);
+                            dialogDeleteNote.dismiss();
+                        }
+                    }
+
+                    new DeleteNoteTask().execute();
+                }
+            });
+
+            view.findViewById(R.id.textCancel).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialogDeleteNote.dismiss();
+                }
+            });
+        }
+        dialogDeleteNote.show();
     }
 
     private void setSubtitleIndicatorColor() {
@@ -362,7 +418,7 @@ public class CreateNotesFragment extends Fragment {
                         Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                         imageNote.setImageBitmap(bitmap);
                         imageNote.setVisibility(View.VISIBLE);
-                        view.findViewById(R.id.imageRemoveImage).setVisibility(View.VISIBLE);
+                        initialView.findViewById(R.id.imageRemoveImage).setVisibility(View.VISIBLE);
                         selectedImagePath = getPathFromUri(selectedImageUri);
                     } catch (Exception exception) {
                         Toast.makeText(getActivity(), exception.getMessage(), Toast.LENGTH_SHORT).show();
@@ -390,7 +446,7 @@ public class CreateNotesFragment extends Fragment {
     private void showAddURLDialog() {
         if (dialogAddURL == null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            View view = LayoutInflater.from(getActivity()).inflate(R.layout.layout_add_url, this.view.findViewById(R.id.layoutAddUrlContainer));
+            View view = LayoutInflater.from(getActivity()).inflate(R.layout.layout_add_url, this.initialView.findViewById(R.id.layoutAddUrlContainer));
             builder.setView(view);
             dialogAddURL = builder.create();
             if (dialogAddURL.getWindow() != null) {
