@@ -1,7 +1,5 @@
 package com.example.notesapp.ui.onboarding;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,18 +26,10 @@ public class ThirdScreen extends Fragment {
             @Override
             public void onClick(View view) {
                 Navigation.findNavController(view).navigate(R.id.action_viewPagerFragment_to_notesFragment);
-                onBoardingFinished();
             }
         });
 
         return view;
-    }
-
-    private void onBoardingFinished() {
-        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("onBoarding", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("Finished", true);
-        editor.apply();
     }
 
 }

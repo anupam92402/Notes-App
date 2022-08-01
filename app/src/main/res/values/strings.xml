@@ -2,8 +2,6 @@
     <string name="app_name">Notes App</string>
     <string name="my_notes">My Notes</string>
     <string name="search_notes">Search Notes</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="note_title">Note Title</string>
     <string name="note_subtitle">Note Subtitle</string>
     <string name="type_note_here">Type note here…</string>
@@ -19,4 +17,18 @@
     <string name="delete">Delete</string>
     <string name="restore">Restore</string>
     <string name="archived_notes">Archived Notes</string>
+
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">LOGIN</string>
+    <string name="forgot_password">FORGOT PASSWORD?</string>
+    <string name="new_user_register">New User? Register</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="create_new_account">Create New Account</string>
+    <string name="already_have_an_account">Already Have an Account?</string>
+    <string name="don_t_worry_we_are_here">Don\'t Worry We Are Here</string>
+    <string name="recover_password">Recover Password</string>
+    <string name="go_back_to_login_screen">Go Back To Login Screen</string>
+    <string name="already_have_an_account_register">Already Have An Account? Register</string>
+
 </resources>

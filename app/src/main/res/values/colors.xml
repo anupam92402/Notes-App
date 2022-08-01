@@ -23,4 +23,6 @@
     <color name="colorDelete">#FF4842</color>
     <color name="colorSearchBackground">#333333</color>
 
+    <color name="blue">#0099ff</color>
+
 </resources>

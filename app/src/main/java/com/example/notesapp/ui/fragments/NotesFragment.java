@@ -85,12 +85,6 @@ public class NotesFragment extends Fragment implements NotesListeners {
             }
         });
 
-        view.findViewById(R.id.imagePaint).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_notesFragment_to_paintFragment);
-            }
-        });
 
         view.findViewById(R.id.imageArchive).setOnClickListener(new View.OnClickListener() {
             @Override

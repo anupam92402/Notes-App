@@ -1,7 +1,5 @@
 package com.example.notesapp.ui.fragments;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -26,19 +24,11 @@ public class SplashScreenFragment extends Fragment {
 
             @Override
             public void run() {
-                if (onBoardingFinished()) {
-                    Navigation.findNavController(view).navigate(R.id.action_splashScreenFragment_to_notesFragment);
-                } else {
-                    Navigation.findNavController(view).navigate(R.id.action_splashScreenFragment_to_viewPagerFragment);
-                }
+                Navigation.findNavController(view).navigate(R.id.action_splashScreenFragment_to_loginFragment);
             }
         }, 3000);
         return view;
     }
 
-    private boolean onBoardingFinished() {
-        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("onBoarding", Context.MODE_PRIVATE);
-        return sharedPreferences.getBoolean("Finished", false);
-    }
 
 }

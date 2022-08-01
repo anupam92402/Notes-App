@@ -11,13 +11,8 @@
         android:label="fragment_splash_screen"
         tools:layout="@layout/fragment_splash_screen">
         <action
-            android:id="@+id/action_splashScreenFragment_to_viewPagerFragment"
-            app:destination="@id/viewPagerFragment"
-            app:popUpTo="@id/splashScreenFragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_splashScreenFragment_to_notesFragment"
-            app:destination="@id/notesFragment"
+            android:id="@+id/action_splashScreenFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
             app:popUpTo="@id/splashScreenFragment"
             app:popUpToInclusive="true" />
     </fragment>
@@ -43,9 +38,6 @@
         <action
             android:id="@+id/action_notesFragment_to_archiveFragment"
             app:destination="@id/archiveFragment" />
-        <action
-            android:id="@+id/action_notesFragment_to_paintFragment"
-            app:destination="@id/paintFragment" />
     </fragment>
     <fragment
         android:id="@+id/createNotesFragment"
@@ -62,8 +54,41 @@
         android:label="fragment_archive"
         tools:layout="@layout/fragment_archive" />
     <fragment
-        android:id="@+id/paintFragment"
-        android:name="com.example.notesapp.ui.fragments.PaintFragment"
-        android:label="fragment_paint"
-        tools:layout="@layout/fragment_paint" />
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.example.notesapp.ui.fragments.ForgotPasswordFragment"
+        android:label="fragment_forgot_password"
+        tools:layout="@layout/fragment_forgot_password">
+        <action
+            android:id="@+id/action_forgotPasswordFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.notesapp.ui.fragments.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_notesFragment"
+            app:destination="@id/notesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.notesapp.ui.fragments.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register">
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_registerFragment_to_viewPagerFragment"
+            app:destination="@id/viewPagerFragment"
+            app:popUpTo="@id/registerFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

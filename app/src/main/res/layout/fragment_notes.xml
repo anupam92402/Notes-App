@@ -110,10 +110,12 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageView
-            android:id="@+id/imagePaint"
+            android:id="@+id/imageAdd"
             android:layout_width="@dimen/_23sdp"
             android:layout_height="@dimen/_23sdp"
-            android:src="@drawable/ic_brush"
+            android:background="@drawable/ic_add_outline"
+            android:backgroundTint="@color/colorIcons"
+            android:src="@drawable/ic_add"
             app:tint="@color/colorIcons" />
 
         <ImageView
