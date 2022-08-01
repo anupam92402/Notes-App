@@ -1,6 +1,8 @@
 package com.example.notesapp.ui.fragments;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -35,7 +38,7 @@ public class NotesFragment extends Fragment implements NotesListeners {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_notes, container, false);
-
+        setDefaultTheme();
         return view;
     }
 
@@ -95,6 +98,41 @@ public class NotesFragment extends Fragment implements NotesListeners {
                 Navigation.findNavController(view).navigate(R.id.action_notesFragment_to_archiveFragment);
             }
         });
+
+        view.findViewById(R.id.imageTheme).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (getAppTheme()) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    setAppTheme("Dark");
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    setAppTheme("Light");
+                }
+            }
+        });
+    }
+
+    public void setDefaultTheme() {
+        if (getAppTheme()) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
+    }
+
+    private boolean getAppTheme() {
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("Theme", Context.MODE_PRIVATE);
+        String theme = sharedPreferences.getString("Mode", "Light");
+        return theme.equals("Light");
+
+    }
+
+    private void setAppTheme(String theme) {
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("Theme", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("Mode", theme);
+        editor.apply();
     }
 
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, 0) {
