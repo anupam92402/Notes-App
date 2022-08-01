@@ -30,5 +30,6 @@
     <string name="recover_password">Recover Password</string>
     <string name="go_back_to_login_screen">Go Back To Login Screen</string>
     <string name="already_have_an_account_register">Already Have An Account? Register</string>
+    <string name="register">Register</string>
 
 </resources>
