@@ -37,12 +37,22 @@ import com.example.notesapp.R;
 import com.example.notesapp.data.database.ArchiveDatabase;
 import com.example.notesapp.data.database.NotesDatabase;
 import com.example.notesapp.data.entities.Note;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 
 public class CreateNotesFragment extends Fragment {
@@ -68,6 +78,11 @@ public class CreateNotesFragment extends Fragment {
     private String selectedImagePath;
     private AlertDialog dialogAddURL, dialogDeleteNote;
     private Note alreadyAvailableNote;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
+    private FirebaseFirestore firebaseFirestore;
+    private Uri selectedImageUri;
+    private StorageReference storageReference;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -156,6 +171,7 @@ public class CreateNotesFragment extends Fragment {
                 }
             });
         }
+
     }
 
     private void saveNote() {
@@ -200,6 +216,33 @@ public class CreateNotesFragment extends Fragment {
             }
         }
         new SaveNoteTask().execute();
+
+
+        //save note to firebase
+        DocumentReference documentReference = firebaseFirestore.collection("notes")
+                .document(firebaseUser.getUid()).collection("myNotes").document();
+        Map<String, Object> noteMap = new HashMap<>();
+        noteMap.put("title", inputNoteTitle.getText().toString());
+        noteMap.put("content", inputNoteText.getText().toString());
+        if (layoutWebURL.getVisibility() == View.VISIBLE) {
+            noteMap.put("url", textWebUrl.getText().toString());
+        } else {
+            noteMap.put("url", "");
+        }
+        noteMap.put("image", selectedImagePath);
+        documentReference.set(noteMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(getContext(), "Note Created Successfully", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getContext(), "Failed to create note", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
     }
 
     private void initialize(View view) {
@@ -213,6 +256,10 @@ public class CreateNotesFragment extends Fragment {
         imageNote = view.findViewById(R.id.imageNote);
         textWebUrl = view.findViewById(R.id.textWebUrl);
         layoutWebURL = view.findViewById(R.id.layoutWebURL);
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        storageReference = FirebaseStorage.getInstance().getReference();
     }
 
     private void initMiscellaneous() {
@@ -413,7 +460,7 @@ public class CreateNotesFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_SELECT_IMAGE && resultCode == RESULT_OK) {
             if (data != null) {
-                Uri selectedImageUri = data.getData();
+                selectedImageUri = data.getData();
                 if (selectedImageUri != null) {
                     try {
                         InputStream inputStream = getActivity().getContentResolver().openInputStream(selectedImageUri);
