@@ -31,5 +31,9 @@
     <string name="go_back_to_login_screen">Go Back To Login Screen</string>
     <string name="already_have_an_account_register">Already Have An Account? Register</string>
     <string name="register">Register</string>
+    <string name="logout">Logout</string>
+    <string name="are_you_sure_you_want_to_logout">Are you sure you want to logout?</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
 
 </resources>

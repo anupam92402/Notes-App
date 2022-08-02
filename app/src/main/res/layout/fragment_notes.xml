@@ -9,17 +9,29 @@
 
     <TextView
         android:id="@+id/textMyNotes"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_12sdp"
         android:layout_marginTop="@dimen/_20sdp"
         android:layout_marginEnd="@dimen/_12sdp"
         android:fontFamily="@font/ubuntu_bold"
+        app:layout_constraintEnd_toStartOf="@id/imageLogout"
         android:includeFontPadding="false"
         android:text="@string/my_notes"
         android:textColor="@color/white"
         android:textSize="@dimen/_20ssp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageLogout"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:src="@drawable/ic_logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/textMyNotes"
+        app:tint="@color/colorDelete" />
 
     <LinearLayout
         android:id="@+id/layoutSearch"

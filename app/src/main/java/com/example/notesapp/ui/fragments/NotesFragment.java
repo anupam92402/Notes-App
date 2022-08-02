@@ -1,8 +1,10 @@
 package com.example.notesapp.ui.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -25,6 +27,7 @@ import com.example.notesapp.data.database.NotesDatabase;
 import com.example.notesapp.data.entities.Note;
 import com.example.notesapp.listeners.NotesListeners;
 import com.example.notesapp.ui.adapters.NotesAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,7 +41,6 @@ public class NotesFragment extends Fragment implements NotesListeners {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_notes, container, false);
-        setDefaultTheme();
         return view;
     }
 
@@ -47,13 +49,16 @@ public class NotesFragment extends Fragment implements NotesListeners {
     private NotesAdapter notesAdapter;
     public static final int REQUEST_CODE_UPDATE_NOTE = 2;
     private int noteOnClickedPosition = -1;
-    private View view;
-    EditText inputSearch;
+    private View initialView;
+    private FirebaseAuth mAuth;
+    private AlertDialog dialogLogout;
+    private EditText inputSearch;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        this.view = view;
+        this.initialView = view;
+        mAuth = FirebaseAuth.getInstance();
         notesRecyclerView = view.findViewById(R.id.notesRecyclerView);
         noteList = new ArrayList<>();
         notesAdapter = new NotesAdapter(noteList, this::onNoteClicked);
@@ -105,14 +110,14 @@ public class NotesFragment extends Fragment implements NotesListeners {
                 }
             }
         });
-    }
 
-    public void setDefaultTheme() {
-        if (getAppTheme()) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        }
+        view.findViewById(R.id.imageLogout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showLogoutNoteDialog();
+            }
+        });
+
     }
 
     private boolean getAppTheme() {
@@ -144,6 +149,34 @@ public class NotesFragment extends Fragment implements NotesListeners {
 
         }
     };
+
+    private void showLogoutNoteDialog() {
+        if (dialogLogout == null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            View view = LayoutInflater.from(getActivity()).inflate(R.layout.layout_logout_user, this.initialView.findViewById(R.id.layoutAddUrlContainer));
+            builder.setView(view);
+            dialogLogout = builder.create();
+            if (dialogLogout.getWindow() != null) {
+                dialogLogout.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+            }
+            view.findViewById(R.id.textYes).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mAuth.signOut();
+                    dialogLogout.dismiss();
+                    Navigation.findNavController(initialView).navigate(R.id.action_notesFragment_to_loginFragment);
+                }
+            });
+
+            view.findViewById(R.id.textNo).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialogLogout.dismiss();
+                }
+            });
+        }
+        dialogLogout.show();
+    }
 
     private void getNotes() {
         @SuppressLint("StaticFieldLeak")
@@ -186,6 +219,6 @@ public class NotesFragment extends Fragment implements NotesListeners {
         Bundle bundle = new Bundle();
         bundle.putBoolean("ViewOrEdit", true);
         bundle.putSerializable("note", note);
-        Navigation.findNavController(view).navigate(R.id.action_notesFragment_to_createNotesFragment, bundle);
+        Navigation.findNavController(initialView).navigate(R.id.action_notesFragment_to_createNotesFragment, bundle);
     }
 }

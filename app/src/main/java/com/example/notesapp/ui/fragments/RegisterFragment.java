@@ -33,6 +33,7 @@ public class RegisterFragment extends Fragment {
     private TextView email, password;
     private View initialView;
     private Button register;
+    FirebaseUser firebaseUser;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -65,28 +66,12 @@ public class RegisterFragment extends Fragment {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         Toast.makeText(getActivity(), "User Registration Successful", Toast.LENGTH_SHORT).show();
-                        sendUserEmailVerification();
+                        Navigation.findNavController(initialView).navigate(R.id.action_registerFragment_to_viewPagerFragment);
                     } else {
                         Toast.makeText(getActivity(), "User Failed to Register", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
-        }
-    }
-
-    private void sendUserEmailVerification() {
-        FirebaseUser firebaseUser = mAuth.getCurrentUser();
-        if (firebaseUser != null) {
-            firebaseUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    Toast.makeText(getActivity(), "Email Verification Sent", Toast.LENGTH_SHORT).show();
-                    mAuth.signOut();
-                    Navigation.findNavController(initialView).navigate(R.id.action_registerFragment_to_loginFragment);
-                }
-            });
-        } else {
-            Toast.makeText(getActivity(), "Failed to Send Verification", Toast.LENGTH_SHORT).show();
         }
     }
 

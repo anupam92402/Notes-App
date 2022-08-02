@@ -18,6 +18,7 @@
         <entry key="..\:/resume projects/Notes App/app/src/main/res/drawable/ic_image.xml" value="0.188" />
         <entry key="..\:/resume projects/Notes App/app/src/main/res/drawable/ic_lock.xml" value="0.211" />
         <entry key="..\:/resume projects/Notes App/app/src/main/res/drawable/ic_person.xml" value="0.211" />
+        <entry key="..\:/resume projects/Notes App/app/src/main/res/drawable/ic_search.xml" value="0.211" />
         <entry key="..\:/resume projects/Notes App/app/src/main/res/drawable/round_bg.xml" value="0.211" />
         <entry key="..\:/resume projects/Notes App/app/src/main/res/drawable/round_border.xml" value="0.211" />
         <entry key="..\:/resume projects/Notes App/app/src/main/res/drawable/wave.xml" value="0.211" />
@@ -45,6 +46,7 @@
         <entry key="..\:/resume projects/Notes App/app/src/main/res/layout/item_container_note.xml" value="0.25416666666666665" />
         <entry key="..\:/resume projects/Notes App/app/src/main/res/layout/layout_add_url.xml" value="0.20854700854700856" />
         <entry key="..\:/resume projects/Notes App/app/src/main/res/layout/layout_delete_note.xml" value="0.25416666666666665" />
+        <entry key="..\:/resume projects/Notes App/app/src/main/res/layout/layout_logout_user.xml" value="0.25416666666666665" />
         <entry key="..\:/resume projects/Notes App/app/src/main/res/layout/layout_miscellaneous.xml" value="0.25416666666666665" />
         <entry key="..\:/resume projects/Notes App/app/src/main/res/layout/layout_restore_note.xml" value="0.25416666666666665" />
         <entry key="..\:/resume projects/Notes App/app/src/main/res/layout/nav_header.xml" value="0.18437025796661607" />
