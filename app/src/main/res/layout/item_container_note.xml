@@ -31,7 +31,7 @@
         android:textSize="@dimen/_13ssp" />
 
     <TextView
-        android:id="@+id/textSubtitle"
+        android:id="@+id/textNote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_8sdp"
@@ -39,6 +39,7 @@
         android:layout_marginEnd="@dimen/_8sdp"
         android:fontFamily="@font/ubuntu"
         android:includeFontPadding="false"
+        android:maxHeight="175dp"
         android:textColor="@color/white"
         android:textSize="@dimen/_12ssp" />
 

@@ -66,7 +66,7 @@ public class CreateNotesFragment extends Fragment {
 
     ImageView imageBack, imageSave;
     View initialView;
-    private EditText inputNoteTitle, inputNoteSubtitle, inputNoteText;
+    private EditText inputNoteTitle, inputNoteText;
     private TextView textDateTime, textWebUrl;
     private String selectedNoteColor;
     private View viewSubtitleIndicator;
@@ -135,7 +135,6 @@ public class CreateNotesFragment extends Fragment {
 
     private void setViewOrUpdate() {
         inputNoteTitle.setText(alreadyAvailableNote.getTitle());
-        inputNoteSubtitle.setText(alreadyAvailableNote.getSubtitle());
         inputNoteText.setText(alreadyAvailableNote.getNoteText());
         textDateTime.setText(alreadyAvailableNote.getDateTime());
 
@@ -173,8 +172,7 @@ public class CreateNotesFragment extends Fragment {
         if (inputNoteTitle.getText().toString().trim().isEmpty()) {
             Toast.makeText(getActivity(), "Note title can't be empty", Toast.LENGTH_SHORT).show();
             return;
-        } else if (inputNoteSubtitle.getText().toString().trim().isEmpty() &&
-                inputNoteText.getText().toString().trim().isEmpty()) {
+        } else if (inputNoteText.getText().toString().trim().isEmpty()) {
             Toast.makeText(getActivity(), "Note can't be empty", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -185,7 +183,6 @@ public class CreateNotesFragment extends Fragment {
             note.setId(alreadyAvailableNote.getId());
         }
         note.setTitle(inputNoteTitle.getText().toString());
-        note.setSubtitle(inputNoteSubtitle.getText().toString());
         note.setNoteText(inputNoteText.getText().toString());
         textDateTime.setText(new SimpleDateFormat("EEEE, d MMMM yyyy HH:mm a", Locale.getDefault())
                 .format(new Date()));
@@ -237,7 +234,6 @@ public class CreateNotesFragment extends Fragment {
 
     private void initialize(View view) {
         inputNoteTitle = view.findViewById(R.id.inputNoteTitle);
-        inputNoteSubtitle = view.findViewById(R.id.inputNoteSubTitle);
         inputNoteText = view.findViewById(R.id.inputNote);
         imageBack = view.findViewById(R.id.imageBack);
         imageSave = view.findViewById(R.id.imageSave);

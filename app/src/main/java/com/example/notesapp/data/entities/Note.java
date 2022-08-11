@@ -21,9 +21,6 @@ public class Note implements Serializable {
     @ColumnInfo(name = "date_time")
     private String dateTime;
 
-    @ColumnInfo(name = "subtitle")
-    private String subtitle;
-
     @ColumnInfo(name = "note_text")
     private String noteText;
 
@@ -58,14 +55,6 @@ public class Note implements Serializable {
 
     public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
-    }
-
-    public String getSubtitle() {
-        return subtitle;
-    }
-
-    public void setSubtitle(String subtitle) {
-        this.subtitle = subtitle;
     }
 
     public String getNoteText() {

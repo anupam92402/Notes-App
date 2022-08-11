@@ -58,28 +58,23 @@ public class ArchiveAdapter extends RecyclerView.Adapter<ArchiveAdapter.ArchiveV
 
     static class ArchiveViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textTitle, textSubtitle, textDateTime;
+        TextView textTitle, textNote, textDateTime;
         LinearLayout layoutNote;
         RoundedImageView imageNote;
 
         public ArchiveViewHolder(View itemView) {
             super(itemView);
             textTitle = itemView.findViewById(R.id.textTitle);
-            textSubtitle = itemView.findViewById(R.id.textSubtitle);
             textDateTime = itemView.findViewById(R.id.textDateTime);
             layoutNote = itemView.findViewById(R.id.layoutNote);
+            textNote = itemView.findViewById(R.id.textNote);
             imageNote = itemView.findViewById(R.id.imageNote);
         }
 
         void setNote(Note note) {
             textTitle.setText(note.getTitle());
-            if (note.getSubtitle().trim().isEmpty()) {
-                textSubtitle.setVisibility(View.GONE);
-            } else {
-                textSubtitle.setText(note.getSubtitle());
-            }
             textDateTime.setText(note.getDateTime());
-
+            textNote.setText(note.getNoteText());
             GradientDrawable gradientDrawable = (GradientDrawable) layoutNote.getBackground();
             if (note.getColor() != null) {
                 gradientDrawable.setColor(Color.parseColor(note.getColor()));

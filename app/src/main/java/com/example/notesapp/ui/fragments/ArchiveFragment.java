@@ -25,6 +25,9 @@ import com.example.notesapp.data.database.NotesDatabase;
 import com.example.notesapp.data.entities.Note;
 import com.example.notesapp.listeners.NotesListeners;
 import com.example.notesapp.ui.adapters.ArchiveAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -166,6 +169,10 @@ public class ArchiveFragment extends Fragment implements NotesListeners {
                         protected Void doInBackground(Void... voids) {
                             ArchiveDatabase.getArchiveDatabase(getActivity().getApplicationContext()).archiveDao().deleteNotePermanently(alreadyAvailableNote);
                             NotesDatabase.getNotesDatabase(getActivity().getApplicationContext()).noteDao().insertNote(alreadyAvailableNote);
+                            //save note to firebase
+                            DocumentReference documentReference = FirebaseFirestore.getInstance().collection("notes")
+                                    .document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("myNotes").document(alreadyAvailableNote.getId() + "");
+                            documentReference.set(alreadyAvailableNote);
                             return null;
                         }
 
