@@ -27,7 +27,13 @@ import com.example.notesapp.data.database.NotesDatabase;
 import com.example.notesapp.data.entities.Note;
 import com.example.notesapp.listeners.NotesListeners;
 import com.example.notesapp.ui.adapters.NotesAdapter;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -53,11 +59,13 @@ public class NotesFragment extends Fragment implements NotesListeners {
     private FirebaseAuth mAuth;
     private AlertDialog dialogLogout;
     private EditText inputSearch;
+    private FirebaseUser firebaseUser;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         this.initialView = view;
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         mAuth = FirebaseAuth.getInstance();
         notesRecyclerView = view.findViewById(R.id.notesRecyclerView);
         noteList = new ArrayList<>();
@@ -90,6 +98,13 @@ public class NotesFragment extends Fragment implements NotesListeners {
             }
         });
 
+
+        if (getArguments() != null && getArguments().getBoolean("alreadyLoggedIn", false)) {
+            //nothing to do
+        } else {
+            clearDatabase();
+            getDataFromFireBase();
+        }
 
         view.findViewById(R.id.imageArchive).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,6 +177,7 @@ public class NotesFragment extends Fragment implements NotesListeners {
             view.findViewById(R.id.textYes).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    clearDatabase();
                     mAuth.signOut();
                     dialogLogout.dismiss();
                     Navigation.findNavController(initialView).navigate(R.id.action_notesFragment_to_loginFragment);
@@ -176,6 +192,20 @@ public class NotesFragment extends Fragment implements NotesListeners {
             });
         }
         dialogLogout.show();
+    }
+
+    private void clearDatabase() {
+        @SuppressLint("StaticFieldLeak")
+        class clearDatabase extends AsyncTask<Void, Void, Void> {
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                NotesDatabase.getNotesDatabase(getActivity().getApplicationContext()).clearAllTables();
+                return null;
+            }
+
+        }
+        new clearDatabase().execute();
     }
 
     private void getNotes() {
@@ -220,5 +250,37 @@ public class NotesFragment extends Fragment implements NotesListeners {
         bundle.putBoolean("ViewOrEdit", true);
         bundle.putSerializable("note", note);
         Navigation.findNavController(initialView).navigate(R.id.action_notesFragment_to_createNotesFragment, bundle);
+    }
+
+    private void getDataFromFireBase() {
+        CollectionReference notebookRef = FirebaseFirestore.getInstance().collection("notes")
+                .document(firebaseUser.getUid()).collection("myNotes");
+        notebookRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                noteList.clear();
+                for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                    Note note = documentSnapshot.toObject(Note.class);
+                    save(note);
+                    noteList.add(note);
+                }
+                notesAdapter.notifyDataSetChanged();
+
+            }
+        });
+    }
+
+    private void save(Note note) {
+        class SaveNoteTask extends AsyncTask<Void, Void, Void> {
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                NotesDatabase.getNotesDatabase(getActivity().getApplicationContext()).noteDao().insertNote(note);
+                return null;
+            }
+
+        }
+        new SaveNoteTask().execute();
+
     }
 }

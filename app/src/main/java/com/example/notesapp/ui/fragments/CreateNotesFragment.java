@@ -50,9 +50,8 @@ import com.google.firebase.storage.StorageReference;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
+import java.util.Random;
 
 
 public class CreateNotesFragment extends Fragment {
@@ -102,10 +101,6 @@ public class CreateNotesFragment extends Fragment {
                 saveNote();
             }
         });
-
-        textDateTime.setText(new SimpleDateFormat("EEEE, d MMMM yyyy HH:mm a", Locale.getDefault())
-                .format(new Date()));
-
         selectedNoteColor = "#333333";
         selectedImagePath = "";
 
@@ -184,9 +179,16 @@ public class CreateNotesFragment extends Fragment {
             return;
         }
         final Note note = new Note();
+        if (alreadyAvailableNote == null) {
+            note.setId(new Random().nextInt(Integer.MAX_VALUE));
+        } else {
+            note.setId(alreadyAvailableNote.getId());
+        }
         note.setTitle(inputNoteTitle.getText().toString());
         note.setSubtitle(inputNoteSubtitle.getText().toString());
         note.setNoteText(inputNoteText.getText().toString());
+        textDateTime.setText(new SimpleDateFormat("EEEE, d MMMM yyyy HH:mm a", Locale.getDefault())
+                .format(new Date()));
         note.setDateTime(textDateTime.getText().toString());
         note.setColor(selectedNoteColor);
         note.setImagePath(selectedImagePath);
@@ -195,9 +197,6 @@ public class CreateNotesFragment extends Fragment {
             note.setWeb_link(textWebUrl.getText().toString());
         }
 
-        if (alreadyAvailableNote != null) {
-            note.setId(alreadyAvailableNote.getId());
-        }
 
         class SaveNoteTask extends AsyncTask<Void, Void, Void> {
 
@@ -220,17 +219,8 @@ public class CreateNotesFragment extends Fragment {
 
         //save note to firebase
         DocumentReference documentReference = firebaseFirestore.collection("notes")
-                .document(firebaseUser.getUid()).collection("myNotes").document();
-        Map<String, Object> noteMap = new HashMap<>();
-        noteMap.put("title", inputNoteTitle.getText().toString());
-        noteMap.put("content", inputNoteText.getText().toString());
-        if (layoutWebURL.getVisibility() == View.VISIBLE) {
-            noteMap.put("url", textWebUrl.getText().toString());
-        } else {
-            noteMap.put("url", "");
-        }
-        noteMap.put("image", selectedImagePath);
-        documentReference.set(noteMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                .document(firebaseUser.getUid()).collection("myNotes").document(note.getId() + "");
+        documentReference.set(note).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Toast.makeText(getContext(), "Note Created Successfully", Toast.LENGTH_SHORT).show();
@@ -404,6 +394,9 @@ public class CreateNotesFragment extends Fragment {
                         protected Void doInBackground(Void... voids) {
                             NotesDatabase.getNotesDatabase(getActivity().getApplicationContext()).noteDao().deleteNote(alreadyAvailableNote);
                             ArchiveDatabase.getArchiveDatabase(getActivity().getApplicationContext()).archiveDao().insertArchiveNote(alreadyAvailableNote);
+                            DocumentReference documentReference = firebaseFirestore.collection("notes")
+                                    .document(firebaseUser.getUid()).collection("myNotes").document(alreadyAvailableNote.getId() + "");
+                            documentReference.delete();
                             return null;
                         }
 

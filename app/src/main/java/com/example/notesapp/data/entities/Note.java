@@ -11,7 +11,8 @@ import java.io.Serializable;
 @Entity(tableName = "notes")
 public class Note implements Serializable {
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = false)
+    @NonNull
     private int id;
 
     @ColumnInfo(name = "title")

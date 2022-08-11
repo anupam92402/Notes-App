@@ -170,7 +170,9 @@ public class LoginFragment extends Fragment {
     public void onStart() {
         super.onStart();
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-            Navigation.findNavController(initialView).navigate(R.id.action_loginFragment_to_notesFragment);
+            Bundle bundle = new Bundle();
+            bundle.putBoolean("alreadyLoggedIn", true);
+            Navigation.findNavController(initialView).navigate(R.id.action_loginFragment_to_notesFragment, bundle);
         }
     }
 }
