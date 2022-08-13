@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
@@ -18,6 +20,13 @@ public class SplashScreenFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_splash_screen, container, false);
+
+        Animation topAnim = AnimationUtils.loadAnimation(getActivity(), R.anim.top_animation);
+        Animation downAnim = AnimationUtils.loadAnimation(getActivity(), R.anim.down_animation);
+
+        view.findViewById(R.id.app_logo).setAnimation(topAnim);
+        view.findViewById(R.id.app_name).setAnimation(downAnim);
+
         getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         new Handler().postDelayed(new Runnable() {
