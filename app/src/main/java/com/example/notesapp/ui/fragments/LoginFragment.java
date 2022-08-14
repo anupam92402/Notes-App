@@ -67,6 +67,13 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        view.findViewById(R.id.otpLayout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(initialView).navigate(R.id.action_loginFragment_to_enterNumberFragment);
+            }
+        });
+
         view.findViewById(R.id.textRegister).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

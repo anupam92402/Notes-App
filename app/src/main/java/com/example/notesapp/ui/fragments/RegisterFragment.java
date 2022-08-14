@@ -60,6 +60,13 @@ public class RegisterFragment extends Fragment {
             }
         });
 
+        view.findViewById(R.id.otpLayout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(initialView).navigate(R.id.action_registerFragment_to_enterNumberFragment);
+            }
+        });
+
         view.findViewById(R.id.textLogin).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

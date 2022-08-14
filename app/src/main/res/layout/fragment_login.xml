@@ -70,6 +70,7 @@
 
     <EditText
         android:id="@+id/inputPassword"
+        style="@style/text_color"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -83,7 +84,6 @@
         android:hint="@string/password"
         android:inputType="textPassword"
         android:padding="16dp"
-        style="@style/text_color"
         android:textColorHint="@color/colorTextHint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -121,22 +121,23 @@
 
     <LinearLayout
         android:id="@+id/googleLayout"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/_42sdp"
-        android:layout_marginStart="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="4dp"
         android:background="@drawable/round_border"
         android:elevation="@dimen/_12sdp"
         android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="14dp"
+        app:layout_constraintEnd_toStartOf="@id/otpLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/forgotPassword">
 
         <ImageView
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_22sdp"
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
             android:layout_weight="1"
             app:srcCompat="@drawable/google" />
 
@@ -146,10 +147,46 @@
             android:layout_weight="1"
             android:fontFamily="@font/ubuntu"
             android:gravity="center"
+            android:paddingStart="8dp"
             android:text="@string/sign_in_with_google"
             android:textColorHint="@color/colorTextHint"
-            android:textSize="@dimen/_16sdp" />
+            android:textSize="16sp" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/otpLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/round_border"
+        android:elevation="@dimen/_12sdp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/googleLayout"
+        app:layout_constraintTop_toBottomOf="@+id/forgotPassword">
+
+        <ImageView
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_phone"
+            app:tint="@color/blue" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="@font/ubuntu"
+            android:gravity="center"
+            android:paddingStart="8dp"
+            android:text="OTP Verification"
+            android:textColorHint="@color/colorTextHint"
+            android:textSize="16sp" />
 
     </LinearLayout>
 

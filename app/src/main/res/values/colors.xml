@@ -25,4 +25,8 @@
     <color name="blue">#0099ff</color>
     <color name="green">#2BE616</color>
 
+    <color name="colortextFirst">#000000</color>
+    <color name="colortextSecond">#777474</color>
+    <color name="colorView">#A5A2A2</color>
+
 </resources>

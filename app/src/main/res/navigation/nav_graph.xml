@@ -81,6 +81,9 @@
         <action
             android:id="@+id/action_loginFragment_to_notesFragment"
             app:destination="@id/notesFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_enterNumberFragment"
+            app:destination="@id/enterNumberFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -95,5 +98,26 @@
             app:destination="@id/viewPagerFragment"
             app:popUpTo="@id/registerFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_registerFragment_to_enterNumberFragment"
+            app:destination="@id/enterNumberFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/enterNumberFragment"
+        android:name="com.example.notesapp.ui.fragments.enterNumberFragment"
+        android:label="fragment_enter_number"
+        tools:layout="@layout/fragment_enter_number">
+        <action
+            android:id="@+id/action_enterNumberFragment_to_verificationOtpFragment"
+            app:destination="@id/verificationOtpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/verificationOtpFragment"
+        android:name="com.example.notesapp.ui.fragments.verificationOtpFragment"
+        android:label="fragment_verification_otp"
+        tools:layout="@layout/fragment_verification_otp">
+        <action
+            android:id="@+id/action_verificationOtpFragment_to_notesFragment"
+            app:destination="@id/notesFragment" />
     </fragment>
 </navigation>
