@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purple_500"
+    style="@style/background"
     android:orientation="vertical"
     tools:context=".ui.fragments.ArchiveFragment">
 
@@ -37,7 +37,7 @@
             android:fontFamily="@font/ubuntu_bold"
             android:includeFontPadding="false"
             android:text="@string/archived_notes"
-            android:textColor="@color/white"
+            style="@style/text_color"
             android:textSize="@dimen/_20ssp" />
 
     </LinearLayout>

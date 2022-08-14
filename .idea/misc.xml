@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/resume projects/Notes App/app/src/main/res/drawable/background_add_button.xml" value="0.2595" />
         <entry key="..\:/resume projects/Notes App/app/src/main/res/drawable/background_delete.xml" value="0.188" />
         <entry key="..\:/resume projects/Notes App/app/src/main/res/drawable/background_dialog.xml" value="0.188" />
         <entry key="..\:/resume projects/Notes App/app/src/main/res/drawable/background_done_button.xml" value="0.188" />
@@ -13,6 +14,7 @@
         <entry key="..\:/resume projects/Notes App/app/src/main/res/drawable/background_note_color_3.xml" value="0.188" />
         <entry key="..\:/resume projects/Notes App/app/src/main/res/drawable/background_note_color_4.xml" value="0.188" />
         <entry key="..\:/resume projects/Notes App/app/src/main/res/drawable/background_note_color_5.xml" value="0.188" />
+        <entry key="..\:/resume projects/Notes App/app/src/main/res/drawable/background_search.xml" value="0.2595" />
         <entry key="..\:/resume projects/Notes App/app/src/main/res/drawable/ic_brush.xml" value="0.211" />
         <entry key="..\:/resume projects/Notes App/app/src/main/res/drawable/ic_email.xml" value="0.211" />
         <entry key="..\:/resume projects/Notes App/app/src/main/res/drawable/ic_image.xml" value="0.188" />

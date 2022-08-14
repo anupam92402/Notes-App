@@ -323,7 +323,7 @@ public class CreateNotesFragment extends Fragment {
         layoutMiscellaneous.findViewById(R.id.viewColor5).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectedNoteColor = "#000000";
+                selectedNoteColor = "#2BE616";
                 imageColor1.setImageResource(0);
                 imageColor2.setImageResource(0);
                 imageColor3.setImageResource(0);
@@ -345,7 +345,7 @@ public class CreateNotesFragment extends Fragment {
                 case "#3A52Fc":
                     layoutMiscellaneous.findViewById(R.id.viewColor4).performClick();
                     break;
-                case "#000000":
+                case "#2BE616":
                     layoutMiscellaneous.findViewById(R.id.viewColor5).performClick();
                     break;
             }
